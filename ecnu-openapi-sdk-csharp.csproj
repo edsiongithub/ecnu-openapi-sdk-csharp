@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>ecnu_openapi_sdk_csharp</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>ECNU</Authors>
+    <Company>ECNU</Company>
+    <PackageId>Ecnu.OpenApi.Sdk</PackageId>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <Description>提供接入ECNU数据开发帮助，开发者仅需简单的配置即可获得ECNU授权的数据。</Description>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.109" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

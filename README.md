@@ -56,60 +56,39 @@ NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.0
 ```
 
 安装完成后，进行简单配置即可获得授权接口的数据。以下为简单示例
-* 注意：开发者需要根据所需要数据的接口来编写实体类（如示例代码中的DnsRecord类需要根据dnsrecord接口数据自己编写）
+* 注意：开发者需要根据所需要数据的接口来编写实体类（如示例代码中的FakeData类需要根据fake或fakewithts接口数据自己编写）
 ```csharp
-        static void Main(string[] args)
-        {
-            //获取token所需要的配置
-            OauthConfig.ClientId = "yourid";
-            OauthConfig.ClientSecret = "yoursecret";
-            //初始化token
-            OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
+    static void Main(string[] args)
+    {
+        //获取token所需要的配置
+        OauthConfig.ClientId = "yourid";
+        OauthConfig.ClientSecret = "yoursecret";
+        //初始化token
+        OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
 
-            //api配置
-            ApiConfig.ApiUrl = "/api/v1/sync/fake";
-            ApiConfig.OutputFilePath = @"D:\newsync.csv";
-            ApiConfig.PageSize = 2000;
-            ApiConfig.BatchSize = 10000;
-            SdkApi.AddParameter("totalNum", "1000000");
-            //SdkApi.AddParameter("ts", "0");
-
-
-            //初始化ouath，获取token
-            OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
+        //api配置
+        ApiConfig.ApiUrl = "/api/v1/sync/fakewithts";
+        ApiConfig.OutputFilePath = @"D:\newsync.csv";
+        ApiConfig.PageSize = 2000;
+        ApiConfig.BatchSize = 10000;
+        SdkApi.AddParameter("ts", "0");
 
 
-            //调用api，获取数据
-            //var res = SdkApi.CallApi("https://api.ecnu.edu.cn/api/v1/sync/dnsrecord?pageSize=1000&pageNum=1&ts=0", "get");
-            //Console.WriteLine(res);
+        //初始化ouath，获取token
+        OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
 
 
-            //写入csv文件
-            //SdkApi.SyncToCsv<DnsRecord>(ApiConfig.OutputFilePath);
-
-            //转换到Model
-            //List<DnsRecord> list = SdkApi.SyncToModel<DnsRecord>();
-            //Console.WriteLine(list.Count);
-            //使用linq，在list中加入筛选逻辑
-            //list.Where(x => x.deleted_mark == 0).ToList();
-
-
-            //导入数据库，数据库类型在dbcontext中配置，用户需要根据所调用api返回的json内容创建模型类DnsRecord
-
-
-            string constr = "Server = localhost; Initial Catalog = yourdb; Integrated Security = true";
-            SqlSugarDbContext db = new SqlSugarDbContext(constr, SqlSugar.DbType.SqlServer);
-
-
-
-            //SdkApi.SyncToDb<FakeData>(db);
-            Console.WriteLine("==================================================================");
-
-       
-            SdkApi.SyncToDb<FakeData>(db);
-            Console.ReadLine();
-        }
+        //调用api，获取数据
+        var res = SdkApi.CallApi("https://api.ecnu.edu.cn/api/v1/sync/fakewithts?pageSize=100&pageNum=1&ts=0", "get");
+        Console.WriteLine(res);
+        Console.ReadLine();
+    }
 ```
+
+详细用法请参考示例：
+- [SyncToCSV](example/exampleToCsv.cs)
+- [SyncToModel](example/exampleToModel.cs)
+- [SyncToDB](example/exampleToDb.cs)
 
 
 ## 性能

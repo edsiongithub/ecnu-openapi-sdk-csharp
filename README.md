@@ -50,7 +50,7 @@ dotnet cli
 ```
 dotnet add package Ecnu.OpenApi.Sdk --version 1.0.0
 ```
-NuGet 包管理器命名
+NuGet 包管理器命令
 ```
 NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.0
 ```
@@ -86,9 +86,9 @@ NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.0
 ```
 
 详细用法请参考示例：
-- [SyncToCSV](example/exampleToCsv.cs)
-- [SyncToModel](example/exampleToModel.cs)
-- [SyncToDB](example/exampleToDb.cs)
+- [SyncToCSV](examples/exampleToCsv.cs)
+- [SyncToModel](examples/exampleToModel.cs)
+- [SyncToDB](examples/exampleToDb.cs)
 
 
 ## 性能

@@ -3,7 +3,7 @@ public class exampleToDb
 {
     static void Main(string[] args)
     {
-          //获取token所需要的配置
+        //获取token所需要的配置
         OauthConfig.ClientId = "yourid";
         OauthConfig.ClientSecret = "yoursecret";
         //初始化token
@@ -26,7 +26,9 @@ public class exampleToDb
         string constr = "Server = yourserver; Initial Catalog = yourdb; UID = youruser; PWD = yourpwd";
         SqlSugarDbContext db = new SqlSugarDbContext(constr, SqlSugar.DbType.SqlServer);
 
-        //导入Db，采用Merge模式写入。表中数据存在，则进行update；数据不存在，则进行insert
+        //导入Db，直接插入。适用于首次导入数据
         SdkApi.SyncToDb<FakeData>(db);
+        //支持Merge模式写入。即表中数据存在，则进行update；数据不存在，则进行insert。此模式中，实体类需要设置主键[SugarColumn(IsPrimaryKey = true)]
+        //SdkApi.SyncToDbMerge<FakeData>(db);
     }
 }

@@ -30,7 +30,7 @@ public class examplePerformance
            //同步至csv文件
            st.Start();
            GC.Collect();
-           //SdkApi.SyncToCsv<FakeData>(ApiConfig.OutputFilePath);
+           SdkApi.SyncToCsv<FakeData>(ApiConfig.OutputFilePath);
            usedMemory = Process.GetCurrentProcess().WorkingSet64 / 1024.0 / 1024.0;
            st.Stop();
            Console.WriteLine("消耗内存:" + usedMemory + "MB");

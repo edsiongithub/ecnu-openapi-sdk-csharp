@@ -15,7 +15,7 @@ namespace DataSyncSdk
         /// </summary>
         /// <param name="clientId"></param>
         /// <param name="clientSecret"></param>
-        public static void InitialOauthCredential(string clientId, string clientSecret)
+        public static void InitOAuth2ClientCredentials(string clientId, string clientSecret)
         {
             if (!string.IsNullOrEmpty(clientId) && !string.IsNullOrEmpty(clientSecret))
             {
@@ -48,8 +48,8 @@ namespace DataSyncSdk
             {
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(OauthConfig.DefaultTimeOut);
-                    var url = ApiConfig.DefaultBaseUrl + "/oauth2/token";
+                    httpClient.Timeout = TimeSpan.FromSeconds(OAuth2Config.DefaultTimeOut);
+                    var url = APIConfig.DefaultBaseUrl + "/oauth2/token";
                     var response = httpClient.PostAsync(url, new FormUrlEncodedContent(new List<KeyValuePair<string, string>>()
                     {
                         new KeyValuePair<string, string>("grant_type","client_credentials"),

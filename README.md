@@ -56,36 +56,29 @@ NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.0
 ```
 
 安装完成后，进行简单配置即可获得授权接口的数据。以下为简单示例
-* 注意：开发者需要根据所需要数据的接口来编写实体类（如示例代码中的FakeData类需要根据fake或fakewithts接口数据自己编写）
+* 注意：开发者需要根据所需要数据的接口来编写实体类（如示例代码中的FakeData类需要根据fakewithts接口数据自己编写）
 ```csharp
     static void Main(string[] args)
     {
         //获取token所需要的配置
-        OauthConfig.ClientId = "yourid";
-        OauthConfig.ClientSecret = "yoursecret";
+        OAuth2Config.ClientId = "yourid";
+        OAuth2Config.ClientSecret = "yoursecret";
         //初始化token
-        OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
+        OauthToken.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
 
         //api配置
-        ApiConfig.ApiUrl = "/api/v1/sync/fakewithts";
-        ApiConfig.OutputFilePath = @"D:\newsync.csv";
-        ApiConfig.PageSize = 2000;
-        ApiConfig.BatchSize = 10000;
-        SdkApi.AddParameter("ts", "0");
+        APIConfig.ApiUrl = "/api/v1/sync/fakewithts";
+        APIConfig.PageSize = 10;
+        APIConfig.ApiParameters.Add("ts", "0");
 
-
-        //初始化ouath，获取token
-        OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
-
-
-        //调用api，获取数据
-        var res = SdkApi.CallApi("https://api.ecnu.edu.cn/api/v1/sync/fakewithts?pageSize=100&pageNum=1&ts=0", "get");
-        Console.WriteLine(res);
-        Console.ReadLine();
+        //导入模型，可以根据业务再进行筛查
+        List<FakeData> list = SdkApi.SyncToModel<FakeData>();
+        var result = list.Where(x=> x.colInt1 > 30).ToList();
     }
 ```
 
 详细用法请参考示例：
+- [CallAPI](examples/exampleCallAPI.cs)
 - [SyncToCSV](examples/exampleToCsv.cs)
 - [SyncToModel](examples/exampleToModel.cs)
 - [SyncToDB](examples/exampleToDb.cs)

@@ -5,17 +5,17 @@ public class examplePerformance
     static void Main(string[] args)
     {
            //获取token所需要的配置
-           OauthConfig.ClientId = "yourid";
-           OauthConfig.ClientSecret = "yoursecret";
+           OAuth2Config.ClientId = "yourid";
+           OAuth2Config.ClientSecret = "yoursecret";
            //初始化token
-           OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
+           OauthToken.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
 
            //api配置
-           ApiConfig.ApiUrl = "/api/v1/sync/fake";
-           ApiConfig.OutputFilePath = @"D:\newsync.csv";
-           ApiConfig.PageSize = 2000;
-           ApiConfig.BatchSize = 10000;
-           SdkApi.AddParameter("totalNum", "1000000");
+           APIConfig.ApiUrl = "/api/v1/sync/fake";
+           APIConfig.OutputFilePath = @"D:\newsync.csv";
+           APIConfig.PageSize = 2000;
+           APIConfig.BatchSize = 10000;
+           APIConfig.ApiParameters.Add("totalNum", "1000000");
 
            //同步至模型
            Stopwatch st = new Stopwatch();
@@ -30,7 +30,7 @@ public class examplePerformance
            //同步至csv文件
            st.Start();
            GC.Collect();
-           SdkApi.SyncToCsv<FakeData>(ApiConfig.OutputFilePath);
+           SdkApi.SyncToCsv<FakeData>(APIConfig.OutputFilePath);
            usedMemory = Process.GetCurrentProcess().WorkingSet64 / 1024.0 / 1024.0;
            st.Stop();
            Console.WriteLine("消耗内存:" + usedMemory + "MB");

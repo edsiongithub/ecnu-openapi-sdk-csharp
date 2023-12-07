@@ -17,7 +17,7 @@ namespace DataSyncSdk
             {
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(OauthConfig.DefaultTimeOut);
+                    httpClient.Timeout = TimeSpan.FromSeconds(OAuth2Config.DefaultTimeOut);
                     httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + OauthToken.token);
                     var response = httpClient.GetAsync(url).Result;
                     if (!response.IsSuccessStatusCode)
@@ -38,7 +38,7 @@ namespace DataSyncSdk
             {
                 if (retry++ >= 3)
                     return "";
-                OauthToken.InitialOauthCredential(OauthConfig.ClientId, OauthConfig.ClientSecret);
+                OauthToken.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
                 HttpGetAsync(url);
             }
             return retString;

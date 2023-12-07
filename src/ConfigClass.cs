@@ -4,17 +4,17 @@ using System.Drawing.Printing;
 namespace DataSyncSdk
 {
 
-    public static class OauthConfig
+    public static class OAuth2Config
     {
         public static string ClientId { get; set; }
-        public static string ClientSecret { get; set;}
+        public static string ClientSecret { get; set; }
         public static string DefaultScope { get; set; } = "ECNU";
         public static int DefaultTimeOut { get; set; } = 10;
     }
-    public static class ApiConfig
+    public static class APIConfig
     {
         public static string DefaultBaseUrl { get; set; } = "https://api.ecnu.edu.cn";
-        public static string OutputFilePath { get; set; } = "D:\\syncresult.csv";
+        public static string OutputFilePath { get; set; } = "syncresult.csv";
         public static string ApiUrl;
         /// <summary>
         /// 取api数据时每页取的数据量，默认2000
@@ -26,7 +26,7 @@ namespace DataSyncSdk
         /// 建议最大不超过100000，且设置为PageSize的整数倍
         /// </summary>
         public static int BatchSize { get; set; } = 10000;
-        public static Dictionary<string, string> ApiParameters { get; set; } 
+        public static Dictionary<string, string> ApiParameters { get; set; }
             = new Dictionary<string, string>();
     }
 

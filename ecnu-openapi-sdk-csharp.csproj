@@ -11,6 +11,8 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <Description>提供接入ECNU数据开发帮助，开发者仅需简单的配置即可获得ECNU授权的数据。</Description>
     <RepositoryUrl>https://github.com/ECNU/ecnu-openapi-sdk-csharp</RepositoryUrl>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
   </PropertyGroup>
 
 

@@ -7,7 +7,7 @@ public class exampleToModel
         OAuth2Config.ClientId = "yourid";
         OAuth2Config.ClientSecret = "yoursecret";
         //初始化token
-        OauthToken.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
+        SdkApi.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
 
 
         //api配置

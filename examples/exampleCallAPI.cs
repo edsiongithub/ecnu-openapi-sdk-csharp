@@ -10,7 +10,7 @@ namespace ecnu_openapi_sdk_csharp.examples
             OAuth2Config.ClientId = "yourid";
             OAuth2Config.ClientSecret = "yoursecret";
             //初始化token
-            OauthToken.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
+            SdkApi.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
 
             //调用api，获取数据
             var res = SdkApi.CallApi("https://api.ecnu.edu.cn/api/v1/sync/fakewithts?ts=0&pageNum=1&pageSize=1", "get");

@@ -64,7 +64,7 @@ NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.0
         OAuth2Config.ClientId = "yourid";
         OAuth2Config.ClientSecret = "yoursecret";
         //初始化token
-        OauthToken.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
+        SdkApi.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
 
         //api配置
         APIConfig.ApiUrl = "/api/v1/sync/fakewithts";

@@ -48,37 +48,47 @@ skd已发布至Nuget中，用户可通过Nuget工具搜索Ecnu.OpenApi.Sdk进行
 
 dotnet cli
 ```
-dotnet add package Ecnu.OpenApi.Sdk --version 1.0.0
+dotnet add package Ecnu.OpenApi.Sdk --version 1.0.3
 ```
 NuGet 包管理器命令
 ```
-NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.0
+NuGet\Install-Package Ecnu.OpenApi.Sdk -Version 1.0.3
 ```
 
 安装完成后，进行简单配置即可获得授权接口的数据。以下为简单示例
-* 注意：开发者需要根据所需要数据的接口来编写实体类（如示例代码中的FakeData类需要根据fakewithts接口数据自己编写）
+* 注意：开发者需要根据所需要数据的接口来编写实体类（如示例代码中的FakeData类需要根据fake或fakewithts接口数据自己编写）
 ```csharp
     static void Main(string[] args)
-    {
-        //获取token所需要的配置
-        OAuth2Config.ClientId = "yourid";
-        OAuth2Config.ClientSecret = "yoursecret";
-        //初始化token
-        SdkApi.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
+        {
+            //获取token所需要的配置
+            OauthConfig.ClientId = "client_id ";
+            OauthConfig.ClientSecret = "client_secret";
+            //初始化token
+            OauthToken.InitOauth2ClientCredentials(OauthConfig.ClientId, OauthConfig.ClientSecret);
 
-        //api配置
-        APIConfig.ApiUrl = "/api/v1/sync/fakewithts";
-        APIConfig.PageSize = 10;
-        APIConfig.ApiParameters.Add("ts", "0");
 
-        //导入模型，可以根据业务再进行筛查
-        List<FakeData> list = SdkApi.SyncToModel<FakeData>();
-        var result = list.Where(x=> x.colInt1 > 30).ToList();
-    }
+            //api配置
+            var api = new ApiConfig()
+            {
+                ApiUrl = "/api/v1/sync/fakewithts",
+                PageSize = 10
+            };
+            api.ApiParameters.Add("ts", "0");
+
+           
+            //数据库连接根据自己的数据库类型来，创建DbContext时选对DbType
+            string constr = "Server = yourserver; Initial Catalog = yourdb; UID = youruser; PWD = yourpdw";
+            SqlSugarDbContext db = new SqlSugarDbContext(constr, SqlSugar.DbType.SqlServer);
+
+            //导入Db，直接插入。适用于首次导入数据
+            SdkApi.SyncToDb<FakeData>(db,api);
+            //支持Merge模式写入。即表中数据存在，则进行update；数据不存在，则进行insert。此模式中，实体类需要设置主键[SugarColumn(IsPrimaryKey = true)]
+            //SdkApi.SyncToDbMerge<FakeData>(db);
+
+        }
 ```
 
 详细用法请参考示例：
-- [CallAPI](examples/exampleCallAPI.cs)
 - [SyncToCSV](examples/exampleToCsv.cs)
 - [SyncToModel](examples/exampleToModel.cs)
 - [SyncToDB](examples/exampleToDb.cs)

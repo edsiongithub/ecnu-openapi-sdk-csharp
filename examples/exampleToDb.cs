@@ -4,16 +4,19 @@ public class exampleToDb
     static void Main(string[] args)
     {
         //获取token所需要的配置
-        OAuth2Config.ClientId = "yourid";
-        OAuth2Config.ClientSecret = "yoursecret";
+        OauthConfig.ClientId = "yourid";
+        OauthConfig.ClientSecret = "yoursecret";
         //初始化token
-        SdkApi.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
+        OauthToken.InitOauth2ClientCredentials(OauthConfig.ClientId, OauthConfig.ClientSecret);
 
 
         //api配置
-        APIConfig.ApiUrl = "/api/v1/sync/fakewithts";
-        APIConfig.PageSize = 10;
-        APIConfig.ApiParameters.Add("ts", "0");
+        var api = new ApiConfig() {
+        ApiUrl = "/api/v1/sync/fakewithts",
+        PageSize = 10
+        };
+        api.ApiParameters.Add("ts", "0");
+
 
         /*
         "SqlServer": "Server = yourserver; Initial Catalog = yourdb; UID = youruser; PWD = yourpwd",
@@ -27,7 +30,7 @@ public class exampleToDb
         SqlSugarDbContext db = new SqlSugarDbContext(constr, SqlSugar.DbType.SqlServer);
 
         //导入Db，直接插入。适用于首次导入数据
-        SdkApi.SyncToDb<FakeData>(db);
+        SdkApi.SyncToDb<FakeData>(db, api);
         //支持Merge模式写入。即表中数据存在，则进行update；数据不存在，则进行insert。此模式中，实体类需要设置主键[SugarColumn(IsPrimaryKey = true)]
         //SdkApi.SyncToDbMerge<FakeData>(db);
     }

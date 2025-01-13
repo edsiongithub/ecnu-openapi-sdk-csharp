@@ -13,12 +13,12 @@ namespace DataSyncSdk
         {
             string retString = string.Empty;
 
-            if (!string.IsNullOrEmpty(SdkApi.token))
+            if (!string.IsNullOrEmpty(OauthToken.token))
             {
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(OAuth2Config.DefaultTimeOut);
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + SdkApi.token);
+                    httpClient.Timeout = TimeSpan.FromSeconds(OauthConfig.DefaultTimeOut);
+                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + OauthToken.token);
                     var response = httpClient.GetAsync(url).Result;
                     if (!response.IsSuccessStatusCode)
                     {
@@ -38,7 +38,7 @@ namespace DataSyncSdk
             {
                 if (retry++ >= 3)
                     return "";
-                SdkApi.InitOAuth2ClientCredentials(OAuth2Config.ClientId, OAuth2Config.ClientSecret);
+                OauthToken.InitOauth2ClientCredentials(OauthConfig.ClientId, OauthConfig.ClientSecret);
                 HttpGetAsync(url);
             }
             return retString;
